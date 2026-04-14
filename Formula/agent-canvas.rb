@@ -1,7 +1,7 @@
 class AgentCanvas < Formula
   desc "Excalidraw canvas CLI for AI agents"
   homepage "https://github.com/git54496/agent-canvas"
-  url "https://github.com/git54496/agent-canvas/releases/download/v0.13.0/agent-canvas-0.13.0-homebrew.tar.gz"
+  url "https://raw.githubusercontent.com/git54496/homebrew-agent-canvas/main/dist/agent-canvas-0.13.0-homebrew.tar.gz"
   version "0.13.0"
   sha256 "ec13ac047bd1f6b03bfc8848c405db1002d7ec16c8c0ea3e26f0d72cfeff0fce"
   license "MIT"

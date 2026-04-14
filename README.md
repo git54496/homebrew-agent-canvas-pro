@@ -19,14 +19,14 @@ brew upgrade agent-canvas
 ## Release Flow
 
 1. In `git54496/agent-canvas`, bump the CLI version and push a tag such as `v0.13.0`.
-2. Wait for the source repo publish workflow to create the GitHub Release asset `agent-canvas-0.13.0-homebrew.tar.gz`.
+2. Build/package in source repo to get `release/agent-canvas-0.13.0-homebrew.tar.gz`.
 3. In this tap repo, run:
 
    ```bash
    ./scripts/update_agent_canvas_formula.sh 0.13.0
    ```
 
-4. Commit and push the updated `Formula/agent-canvas.rb`.
+4. Commit and push the updated formula and `dist/` archive.
 
 ## Notes
 

@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
-  echo "usage: $0 <version>" >&2
-  echo "example: $0 0.13.0" >&2
+if [[ $# -lt 1 || $# -gt 2 ]]; then
+  echo "usage: $0 <version> [archive_path]" >&2
+  echo "example: $0 0.13.0 /tmp/agent-canvas-0.13.0-homebrew.tar.gz" >&2
   exit 1
 fi
 
 VERSION="${1#v}"
-TAG="v${VERSION}"
-REPO="git54496/agent-canvas"
-URL="https://github.com/${REPO}/releases/download/${TAG}/agent-canvas-${VERSION}-homebrew.tar.gz"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 FORMULA_PATH="${ROOT_DIR}/Formula/agent-canvas.rb"
-TMP_ARCHIVE="$(mktemp "${TMPDIR:-/tmp}/agent-canvas-${VERSION}.XXXXXX.tar.gz")"
-trap 'rm -f "${TMP_ARCHIVE}"' EXIT
+DIST_DIR="${ROOT_DIR}/dist"
+ARCHIVE_NAME="agent-canvas-${VERSION}-homebrew.tar.gz"
+ARCHIVE_PATH="${2:-${ROOT_DIR}/../agent-canvas/release/${ARCHIVE_NAME}}"
+REPO="git54496/agent-canvas"
+TAP_REPO="git54496/homebrew-agent-canvas"
+URL="https://raw.githubusercontent.com/${TAP_REPO}/main/dist/${ARCHIVE_NAME}"
 
-curl -fL "${URL}" -o "${TMP_ARCHIVE}"
-SHA256="$(shasum -a 256 "${TMP_ARCHIVE}" | awk '{print $1}')"
+if [[ ! -f "${ARCHIVE_PATH}" ]]; then
+  echo "archive not found: ${ARCHIVE_PATH}" >&2
+  exit 1
+fi
+
+mkdir -p "${DIST_DIR}"
+cp "${ARCHIVE_PATH}" "${DIST_DIR}/${ARCHIVE_NAME}"
+SHA256="$(shasum -a 256 "${DIST_DIR}/${ARCHIVE_NAME}" | awk '{print $1}')"
 
 cat > "${FORMULA_PATH}" <<EOF
 class AgentCanvas < Formula
@@ -47,5 +54,6 @@ end
 EOF
 
 echo "Updated ${FORMULA_PATH}"
+echo "archive=${DIST_DIR}/${ARCHIVE_NAME}"
 echo "version=${VERSION}"
 echo "sha256=${SHA256}"
