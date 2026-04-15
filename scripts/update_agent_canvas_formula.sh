@@ -40,6 +40,7 @@ class AgentCanvasPro < Formula
 
   def install
     libexec.install Dir["*"]
+    chmod 0555, libexec/"bin/canvas.js"
 
     (bin/"canvas").write_env_script(
       libexec/"bin/canvas.js",
