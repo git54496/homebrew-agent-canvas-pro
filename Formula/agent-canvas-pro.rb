@@ -3,7 +3,7 @@ class AgentCanvasPro < Formula
   homepage "https://github.com/git54496/agent-canvas-pro"
   url "https://raw.githubusercontent.com/git54496/homebrew-agent-canvas-pro/main/dist/agent-canvas-pro-0.13.0-homebrew.tar.gz"
   version "0.13.0"
-  sha256 "334f275244139a9424bc3b5e979e16c51a39e2b18a104860cfef6bc67044f296"
+  sha256 "fa17ffb1b558b7f98bb122224828fa36ab5607c4cd8d40831f78e2b1d3a13118"
   license "MIT"
   head "https://github.com/git54496/agent-canvas-pro.git", branch: "main"
 
