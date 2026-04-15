@@ -12,9 +12,9 @@ ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 FORMULA_PATH="${ROOT_DIR}/Formula/agent-canvas.rb"
 DIST_DIR="${ROOT_DIR}/dist"
 ARCHIVE_NAME="agent-canvas-${VERSION}-homebrew.tar.gz"
-ARCHIVE_PATH="${2:-${ROOT_DIR}/../agent-canvas/release/${ARCHIVE_NAME}}"
-REPO="git54496/agent-canvas"
-TAP_REPO="git54496/homebrew-agent-canvas"
+ARCHIVE_PATH="${2:-${ROOT_DIR}/../agent-canvas-pro/release/${ARCHIVE_NAME}}"
+REPO="git54496/agent-canvas-pro"
+TAP_REPO="git54496/homebrew-agent-canvas-pro"
 URL="https://raw.githubusercontent.com/${TAP_REPO}/main/dist/${ARCHIVE_NAME}"
 
 if [[ ! -f "${ARCHIVE_PATH}" ]]; then
@@ -45,6 +45,16 @@ class AgentCanvas < Formula
       libexec/"bin/agent-canvas.js",
       PATH => "#{Formula["node"].opt_bin}:#{ENV["PATH"]}"
     )
+  end
+
+  def caveats
+    <<~EOS
+      If \`agent-canvas\` does not resolve to this Homebrew install, run:
+        which -a agent-canvas
+
+      If a Node global install appears first in PATH, remove it:
+        npm uninstall -g @agent-canvas/cli
+    EOS
   end
 
   test do
